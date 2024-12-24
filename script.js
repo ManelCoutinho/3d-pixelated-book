@@ -69,6 +69,8 @@ function init() {
 
     bookMesh = new THREE.Mesh(geometry, materials);
     bookMesh.rotation.set(0.3, 0.5, 0);
+    bookMesh.scale.set(1.5, 1.5, 1.5);
+
 
     scene.add(bookMesh);
 
@@ -86,45 +88,12 @@ function setupPostProcessing() {
     const renderPass = new RenderPass(scene, camera);
     composer.addPass(renderPass);
 
-    // Define the Pixelation Shader
-    // const PixelationShader = {
-    //     uniforms: {
-    //         "tDiffuse": { value: null },
-    //         "resolution": { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-    //         "pixelSize": { value: 10.0 } // Initial pixel size
-    //     },
-    //     vertexShader: `
-    //         varying vec2 vUv;
-    //         void main() {
-    //             vUv = uv;
-    //             gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-    //         }
-    //     `,
-    //     fragmentShader: `
-    //         uniform sampler2D tDiffuse;
-    //         uniform vec2 resolution;
-    //         uniform float pixelSize;
-    //         varying vec2 vUv;
 
-    //         void main() {
-    //             // Calculate the size of each pixel block in UV space
-    //             vec2 pixel = pixelSize / resolution;
-
-    //             // Find the coordinates of the current pixel block
-    //             vec2 coord = pixel * floor(vUv / pixel);
-
-    //             // Sample the texture at the center of the pixel block
-    //             vec4 color = texture2D(tDiffuse, coord + pixel * 0.5);
-
-    //             gl_FragColor = color;
-    //         }
-    //     `
-    // };
     const PixelationShader = {
         uniforms: {
             "tDiffuse": { value: null },
             "resolution": { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-            "pixelSize": { value: 10.0 }, // Initial pixel size
+            "pixelSize": { value: 20.0 }, // Initial pixel size
             "samples": { value: 4 }        // Number of samples per axis (e.g., 4x4 grid)
         },
         vertexShader: `
